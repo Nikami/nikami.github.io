@@ -27,7 +27,9 @@
     "@angular/platform-server": "4.3.5",
     "@angular/router": "4.3.5",
     "@angular/upgrade": "4.3.5",
+    "angular-highcharts": "^4.1.0",
     "core-js": "^2.4.1",
+    "highcharts": "^6.1.0",
     "rxjs": "5.5.5",
     "systemjs": "0.19.40",
     "timers": "0.1.1",
@@ -37,6 +39,7 @@
     "zone.js": "^0.8.16"
   },
   "devDependencies": {
+    "@types/highcharts": "^5.0.22",
     "@types/node": "^6.0.92",
     "bootstrap-less-port": "0.0.6",
     "codelyzer": "^3.1.2",

@@ -4,12 +4,9 @@ var nodePath = require('path'),
 
 // Значение "<base href=''>" в index.html
 conf.BASE_URL = '';
-conf.ROOT_SP = 'e:/work/ssp';
-conf.ROOT_WEB = conf.ROOT_SP ? conf.ROOT_SP + conf.BASE_URL : '';
-
+conf.ROOT_WEB = conf.BASE_URL;
 
 conf.DIST_DIR = root + 'dist/';
-conf.MERGED = root + 'link/';
-conf.AOT_DIR = root + 'aot/';
+conf.SRC = root + 'src/';
 
 module.exports = conf;

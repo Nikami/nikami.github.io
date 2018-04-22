@@ -9,6 +9,8 @@ import {HttpUtils} from "./utils/http-utils";
 import {Forecast16Component} from "./components/forecast16.component";
 import {Forecast16Resolver} from "./resolvers/forecast16.resolver";
 import {Forecast16Repository} from "./domain/forecast-16.repository";
+import {TemperaturePipe} from "./services/pipes/temperature.pipe";
+import {ChartModule} from "angular-highcharts";
 
 /**
  * ---------- APP MODULES DECLARATION -------------
@@ -20,6 +22,7 @@ const ANGULAR_MODULES = [
 
 const VENDOR_MODULES = [
   RouterModule.forRoot(APP_ROUTES, {enableTracing: false, useHash: true}),
+  ChartModule
 ];
 
 @NgModule({
@@ -28,11 +31,16 @@ const VENDOR_MODULES = [
     ...VENDOR_MODULES
   ],
   declarations: [
+    // components
     AppComponent,
-    Forecast16Component
+    Forecast16Component,
+    // pipes
+    TemperaturePipe
   ],
   providers: [
+    // utils
     HttpUtils,
+    // services
     ReferenceService,
     Forecast16Repository,
     Forecast16Resolver

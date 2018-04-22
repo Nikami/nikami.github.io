@@ -1,1 +1,42 @@
-<h1>Прогнозик тут</h1>
+<div>
+  {{ forecast.date | date:'EEEE, d MMMM' }}
+</div>
+
+<div>
+  {{ forecast.cityName }}
+</div>
+
+<div>
+  {{ forecast.firstDayTemp | temperature:'K':'C' }}
+</div>
+
+<div>
+  {{ forecast.weatherMainDesc }}
+</div>
+
+<div class="d-flex">
+  <div class="ml-4 mr-2">
+    <strong>
+      {{ text.PRESSURE }}:
+    </strong>
+    {{ forecast.firstDayPressure }}
+  </div>
+  <div class="ml-2 mr-2">
+    <strong>
+      {{ text.HUMIDITY }}:
+    </strong>
+    {{ forecast.firstDayHumidity }}
+  </div>
+  <div class="ml-2 mr-2">
+    <strong>
+      {{ text.WIND_SPEED }}:
+    </strong>
+    {{ forecast.firstDayWindSpeed }}
+  </div>
+  <div class="ml-2 mr-4">
+    <strong>
+      {{ text.CLOUDS }}:
+    </strong>
+    {{ forecast.firstDayClouds }}
+  </div>
+</div>

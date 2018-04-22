@@ -2,9 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Test</title>
+  <title>Forecast 16</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <link rel="stylesheet" href="assets/styles/styles.css">
 
   <script src="../node_modules/core-js/client/shim.js"></script>
   <script src="../node_modules/zone.js/dist/zone.js"></script>
@@ -12,14 +13,8 @@
 
   <script src="systemjs.config.js"></script>
   <script>
-    // window.module = 'commonjs';
-    // System.import('../systemjs.config.js').then(function() {
-      System.import('app');
-    // }).catch(console.error.bind(console));
+    System.import('app').catch(console.error.bind(console));
   </script>
-
-
-  <!--<link rel="stylesheet" href="assets/styles/styles.css">-->
 
 </head>
 <body>

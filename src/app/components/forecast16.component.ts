@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Forecast16} from "../domain/forecast-16";
+import {FORECAST_16_TEXT} from "./forecast16.text";
 
 @Component({
   moduleId: module.id,
@@ -13,5 +14,7 @@ export class Forecast16Component {
     console.log('forecast=', this.forecast);
   }
 
-  private forecast: ReadonlyArray<Forecast16> = this.route.snapshot.data['forecast16'];
+  public forecast: Forecast16 = this.route.snapshot.data['forecast16'];
+  public text = FORECAST_16_TEXT;
+
 }

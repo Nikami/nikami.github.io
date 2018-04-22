@@ -24,6 +24,8 @@
       // other libraries
       'tslib': 'npm:tslib/tslib.js',
       'rxjs': 'npm:rxjs',
+      'angular-highcharts': 'npm:angular-highcharts/angular-highcharts.umd.js',
+      'highcharts': 'npm:highcharts/highcharts.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {

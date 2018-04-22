@@ -19,19 +19,9 @@ const uglify = require('gulp-uglify-es').default;
 const connect = require('gulp-connect');
 
 const appVersion = require('./package.json').version;
-const symlinkCreator = function(root, dest) {
-  return gulp.src(root)
-    .pipe(print())
-    .pipe(vfs.symlink(dest || conf.MERGED));
-};
 
 gulp.task('connect', function() {
   connect.server();
-});
-
-gulp.task('symlink', function() {
-  // Создаем symlink на все файлы в папке и вложеных папках
-  return symlinkCreator(['./src/**/*.*', '!./src/**/*.js', '!./src/**/*.js.map']);
 });
 
 const compileLess = function(root, config) {
@@ -51,15 +41,15 @@ const compileLess = function(root, config) {
 };
 
 const htmlProcess = function(isProd) {
-  return gulp.src(conf.MERGED + 'index.html')
+  return gulp.src(conf.SRC + 'index.html')
     .pipe(preprocess({context: {MODE: isProd ? 'prod': 'dev', BASE_URL: conf.BASE_URL, APP_VERSION: appVersion}}))
     .pipe(rename('index.html'))
-    .pipe(gulp.dest(isProd ? conf.DIST_DIR : conf.MERGED));
+    .pipe(gulp.dest(isProd ? conf.DIST_DIR : conf.SRC));
 };
 
 gulp.task('watch', function() {
-  gulp.watch(conf.MERGED + '**/*.less', ['less_dev']);
-  gulp.watch(conf.MERGED + '**/*.html', ['html_dev']);
+  gulp.watch(conf.SRC + '**/*.less', ['less_dev']);
+  gulp.watch(conf.SRC + '**/*.html', ['html_dev']);
 });
 
 gulp.task('prepare_prod', ['clean'], function(done) {
@@ -78,20 +68,13 @@ gulp.task('html_dev', function() {
   return htmlProcess(false);
 });
 
-gulp.task('less_prod', ['less_app_prod', 'less_common_prod'], function() {
-});
-
-gulp.task('less_app_prod', function() {
-  return compileLess(conf.MERGED + 'std/**/*.less', {isProd: true});
-});
-
-gulp.task('less_common_prod', function() {
-  gutil.log('Compiling LESS for production');
-  return compileLess(conf.MERGED + 'assets/styles/styles.less', {isProd: true, dest: conf.DIST_DIR + 'assets/styles/'});
-});
-
 gulp.task('less_dev', function() {
-  return compileLess([conf.MERGED + 'std/**/*.less', conf.MERGED + 'assets/styles/styles.less'], {isProd: false});
+  return compileLess([conf.SRC + 'assets/styles/styles.less'], {isProd: false});
+});
+
+gulp.task('less_prod', function() {
+  gutil.log('Compiling LESS for production');
+  return compileLess(conf.SRC + 'assets/styles/styles.less', {isProd: true, dest: conf.DIST_DIR + 'assets/styles/'});
 });
 
 gulp.task('lib_prod', function() {
@@ -118,7 +101,7 @@ gulp.task('media_prod', function() {
 });
 
 gulp.task('common_prod', function() {
-  const commonFiles = [conf.MERGED + 'favicon.ico'];
+  const commonFiles = [conf.SRC + 'favicon.ico'];
 
   return gulp.src(commonFiles)
     .pipe(gulp.dest(conf.DIST_DIR));
@@ -126,7 +109,7 @@ gulp.task('common_prod', function() {
 
 
 gulp.task('clean', function(done) {
-  del([conf.MERGED, conf.DIST_DIR, conf.AOT_DIR]).then(paths => {
+  del(conf.DIST_DIR).then(paths => {
     gutil.log(gutil.colors.gray('Deleted folders:\n\t', paths.join('\n\t')));
     done();
   });
