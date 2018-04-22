@@ -1,0 +1,7 @@
+link/**
+node_modules/**
+**.js
+**.js.map
+!src/systemjs.config.js
+.idea/**
+*.iml
