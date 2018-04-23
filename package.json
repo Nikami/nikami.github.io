@@ -12,8 +12,8 @@
     "watch": "concurrently --kill-others  \"npm run tsc:w\" \"gulp watch\"",
     "lint": "tslint ./link/**/*.ts -t verbose",
     "tsc:w": "tsc -w --pretty",
-    "build_dev": "gulp prepare_dev && npm run watch",
-    "build_prod": "gulp prepare_prod && npm run build_prod_base"
+    "build_dev": "gulp dev && npm run watch",
+    "build_prod": "gulp prod && npm run aot && npm run rollup && gulp uglify && gulp zip"
   },
   "dependencies": {
     "@angular/animations": "4.3.5",

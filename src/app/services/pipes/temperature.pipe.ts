@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-enum TemperatureUnit {
+export enum TemperatureUnit {
   K = 'K', // Kalvin
   C = 'C', // Celsius
   F = 'F' // Fahrenheit
 }
 
-enum TemperatureUnitCode {
+export enum TemperatureUnitCode {
   K = 'K', // Kalvin
   C = '℃', // Celsius
   F = '℉' // Fahrenheit
@@ -17,7 +17,7 @@ enum TemperatureUnitCode {
 })
 export class TemperaturePipe implements PipeTransform {
 
-  transform(value: number, input: TemperatureUnit, output: TemperatureUnit): string {
+  transform(value: number, input: TemperatureUnit, output?: TemperatureUnit, symbol?: boolean): any {
     if (isNaN(value) || !input) {
       return value.toString();
     }
@@ -26,12 +26,15 @@ export class TemperaturePipe implements PipeTransform {
       return value + (TemperatureUnitCode[input as keyof typeof TemperatureUnit] || '');
     }
 
+    let convertedValue = 0;
     const converter = input + output;
     switch(converter) {
       case (TemperatureUnit.K + TemperatureUnit.C):
-        return (value - 273.15).toFixed(0) + TemperatureUnitCode.C;
+        convertedValue = +((value - 273.15).toFixed(0));
+        return symbol ? convertedValue + TemperatureUnitCode.C : convertedValue;
       case (TemperatureUnit.C + TemperatureUnit.K):
-        return (value + 273.15).toFixed(0) + TemperatureUnitCode.K;
+        convertedValue = +((value + 273.15).toFixed(0));
+        return symbol ? convertedValue + TemperatureUnitCode.K : convertedValue;
         // TODO write other converters...
       default:
         return value.toString();

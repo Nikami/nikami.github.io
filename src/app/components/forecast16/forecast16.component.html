@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <div class="navbar-brand">
+      Forecast
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="mt-2 font-weight-light small">
+    {{ forecast.date | date:'EEEE, d MMMM' }}
+  </div>
+
+  <h6 class="mt-4 mb-1 d-flex justify-content-center">
+    {{ forecast.cityName }}, {{ forecast.countryCode }}
+  </h6>
+
+  <h3 class="d-flex mb-0 justify-content-center">
+    {{ forecast.currentTemp | temperature:'K':'C':true }}
+  </h3>
+
+  <div class="d-flex justify-content-center mt-2 font-weight-light small">
+    {{ forecast.weatherMainDesc }}
+  </div>
+
+  <div class="d-flex bg-light justify-content-center mt-2 mb-4 p-1 small">
+    <div class="mr-2">
+      <strong>
+        {{ text.PRESSURE }}:
+      </strong>
+      {{ forecast.firstDayPressure }}
+    </div>
+    <div class="ml-2 mr-2">
+      <strong>
+        {{ text.HUMIDITY }}:
+      </strong>
+      {{ forecast.firstDayHumidity }}
+    </div>
+    <div class="ml-2 mr-2">
+      <strong>
+        {{ text.WIND_SPEED }}:
+      </strong>
+      {{ forecast.firstDayWindSpeed }}
+    </div>
+    <div class="ml-2">
+      <strong>
+        {{ text.CLOUDS }}:
+      </strong>
+      {{ forecast.firstDayClouds }}
+    </div>
+  </div>
+
+  <tabs>
+    <tab *ngFor="let tab of tabs" [name]="tab.name">
+      <ng-template tabContent>
+        <chart [series]="tab.series" [xAxis]="tab.axis"></chart>
+      </ng-template>
+    </tab>
+  </tabs>
+</div>

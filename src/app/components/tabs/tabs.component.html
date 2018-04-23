@@ -1,0 +1,15 @@
+<ul class="nav nav-tabs">
+  <li *ngFor="let tab of tabs" class="nav-item">
+    <a (click)="selectTab(tab)" [ngClass]="{active: tab.isActive}" class="nav-link small">{{ tab.name }}</a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <ng-container *ngFor="let tab of tabs">
+
+    <div *ngIf="tab.isActive" class="tab-pane" [ngClass]="{active: tab.isActive}">
+      <ng-template [ngTemplateOutlet]="tab.tabContentDirective.templateRef"></ng-template>
+    </div>
+
+  </ng-container>
+</div>

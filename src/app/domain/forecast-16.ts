@@ -1,39 +1,39 @@
 interface Temperature {
-  readonly day: number,
-  readonly min: number,
-  readonly max: number,
-  readonly night: number,
-  readonly eve: number,
-  readonly morn: number
+  readonly day: number;
+  readonly min: number;
+  readonly max: number;
+  readonly night: number;
+  readonly eve: number;
+  readonly morn: number;
 }
 
 interface Weather {
-  readonly id: number,
-  readonly main: string,
-  readonly description: string,
-  readonly icon: string
+  readonly id: number;
+  readonly main: string;
+  readonly description: string;
+  readonly icon: string;
 }
 
 interface City {
   readonly id: number;
-  readonly name: string,
-  readonly country: string,
+  readonly name: string;
+  readonly country: string;
   readonly coord: { 
-    readonly lon: number,
-    readonly lat: number
+    readonly lon: number;
+    readonly lat: number;
   }
 }
 
 interface DayForecast {
-  readonly dt: number,
-  readonly temp: Temperature,
-  readonly pressure: number,
-  readonly humidity: number,
-  readonly weather: ReadonlyArray<Weather>,
-  readonly speed: number,
-  readonly deg: number,
-  readonly clouds: number,
-  readonly rain: number,
+  readonly dt: number;
+  readonly temp: Temperature;
+  readonly pressure: number;
+  readonly humidity: number;
+  readonly weather: ReadonlyArray<Weather>;
+  readonly speed: number;
+  readonly deg: number;
+  readonly clouds: number;
+  readonly rain: number;
   readonly uvi: number
 }
 
@@ -51,13 +51,13 @@ export class Forecast16 {
 
   constructor(forecast: Forecast16JSON) {
     this._city = forecast.city;
-    this._date = new Date(forecast.time);
+    this._date = new Date(forecast.time * 1000);
     this._days = forecast.data;
     this._firstDay = this._days[0];
   }
 
-  get city(): City {
-    return this._city;
+  get countryCode(): string {
+    return this._city.country;
   }
 
   get cityName(): string {
@@ -72,8 +72,18 @@ export class Forecast16 {
     return this._days;
   }
 
-  get firstDayTemp(): number {
-    return this._firstDay.temp.day;
+  get currentTemp(): number {
+    const hours = this._date.getHours();
+
+    if (hours > 6 && hours < 12) {
+      return this._firstDay.temp.morn;
+    } else if (hours > 12 && hours < 18) {
+      return this._firstDay.temp.day;
+    } else if (hours > 18 && hours < 24) {
+      return this._firstDay.temp.eve;
+    } else {
+      return this._firstDay.temp.night;
+    }
   }
 
   get firstDayPressure(): string {

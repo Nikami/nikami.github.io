@@ -48,15 +48,15 @@ const htmlProcess = function(isProd) {
 };
 
 gulp.task('watch', function() {
-  gulp.watch(conf.SRC + '**/*.less', ['less_dev']);
-  gulp.watch(conf.SRC + '**/*.html', ['html_dev']);
+  gulp.watch(conf.SRC + '/**/*.less', ['less_dev']);
+  gulp.watch(conf.SRC + '/**/*.html', ['html_dev']);
 });
 
-gulp.task('prepare_prod', ['clean'], function(done) {
-  return gulpSequence(['less_prod', 'common_prod', 'html_prod', 'media_prod'], done);
+gulp.task('prod', ['clean'], function(done) {
+  return gulpSequence(['less_prod', 'html_prod', 'media_prod'], done);
 });
 
-gulp.task('prepare_dev', ['clean'], function(done) {
+gulp.task('dev', ['clean'], function(done) {
   return gulpSequence(['less_dev', 'html_dev'], done);
 });
 
@@ -100,16 +100,8 @@ gulp.task('media_prod', function() {
     .pipe(gulp.dest(conf.DIST_DIR + 'assets/'));
 });
 
-gulp.task('common_prod', function() {
-  const commonFiles = [conf.SRC + 'favicon.ico'];
-
-  return gulp.src(commonFiles)
-    .pipe(gulp.dest(conf.DIST_DIR));
-});
-
-
 gulp.task('clean', function(done) {
-  del(conf.DIST_DIR).then(paths => {
+  del([conf.DIST_DIR, conf.AOT_DIR]).then(paths => {
     gutil.log(gutil.colors.gray('Deleted folders:\n\t', paths.join('\n\t')));
     done();
   });
@@ -120,6 +112,12 @@ gulp.task('clean_src', function(done) {
     gutil.log(gutil.colors.gray('Deleted files:\n\t', paths.join('\n\t')));
     done()
   });
+});
+
+gulp.task('uglify', function () {
+  gulp.src(conf.DIST_DIR + 'app.' + appVersion + '.js')
+    .pipe(uglify({mangle: true, compress: true}))
+    .pipe(gulp.dest(conf.DIST_DIR));
 });
 
 gulp.task('zip', function() {
