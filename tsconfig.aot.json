@@ -11,12 +11,16 @@
     "removeComments": true,
     "noImplicitAny": true,
     "lib": ["es2015", "dom"],
-    "outDir": "aot",
     "suppressImplicitAnyIndexErrors": true,
+    "allowSyntheticDefaultImports": true,
     "typeRoots": [
       "node_modules/@types"
     ]
   },
+  "files": [
+    "src/app/app.module.ts",
+    "src/app/main.aot.ts"
+  ],
   "angularCompilerOptions": {
     "genDir": "aot",
     "skipMetadataEmit": true

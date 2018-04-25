@@ -1,12 +1,10 @@
 const conf = require('./variables.js');
 const gulp = require('gulp');
-const argv = require('yargs').argv;
 const gutil = require('gulp-util');
 const sourcemaps = require('gulp-sourcemaps');
 const gulpif = require('gulp-if');
 const print = require('gulp-print');
 const del = require('del');
-const vfs = require('vinyl-fs');
 const gulpSequence = require('run-sequence');
 const less = require('gulp-less');
 const LessAutoprefix = require('less-plugin-autoprefix');
@@ -14,7 +12,6 @@ const autoprefix = new LessAutoprefix({browsers: ['last 2 versions']});
 const preprocess = require('gulp-preprocess');
 const rename = require('gulp-rename');
 const zip = require('gulp-zip');
-const fs = require('graceful-fs');
 const uglify = require('gulp-uglify-es').default;
 const connect = require('gulp-connect');
 
@@ -41,7 +38,7 @@ const compileLess = function(root, config) {
 };
 
 const htmlProcess = function(isProd) {
-  return gulp.src(conf.SRC + 'index.html')
+  return gulp.src(conf.SRC + 'index_template.html')
     .pipe(preprocess({context: {MODE: isProd ? 'prod': 'dev', BASE_URL: conf.BASE_URL, APP_VERSION: appVersion}}))
     .pipe(rename('index.html'))
     .pipe(gulp.dest(isProd ? conf.DIST_DIR : conf.SRC));
@@ -53,7 +50,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('prod', ['clean'], function(done) {
-  return gulpSequence(['less_prod', 'html_prod', 'media_prod'], done);
+  return gulpSequence(['less_prod', 'html_prod', 'media_prod', 'lib_prod'], done);
 });
 
 gulp.task('dev', ['clean'], function(done) {

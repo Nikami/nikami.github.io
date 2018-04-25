@@ -7,6 +7,7 @@
   <meta http-equiv="x-ua-compatible" content="IE=edge">
   <link rel="stylesheet" href="assets/styles/styles.css">
 
+  <!-- @if MODE='dev' -->
   <script src="../node_modules/core-js/client/shim.js"></script>
   <script src="../node_modules/zone.js/dist/zone.js"></script>
   <script src="../node_modules/systemjs/dist/system.src.js"></script>
@@ -14,10 +15,19 @@
   <script>
     System.import('app').catch(console.error.bind(console));
   </script>
+  <!-- @endif -->
 
+  <!-- @if MODE='prod' -->
+  <script src="shim.<!-- @echo APP_VERSION -->.js"></script>
+  <script src="zone.<!-- @echo APP_VERSION -->.js"></script>
+  <script>window.module = 'aot';</script>
+  <!-- @endif -->
 </head>
 <body>
   <main-app>Loading...</main-app>
 </body>
+<!-- @if MODE='prod' -->
+<script src="app.<!-- @echo APP_VERSION -->.js"></script>
+<!-- @endif -->
 
 </html>

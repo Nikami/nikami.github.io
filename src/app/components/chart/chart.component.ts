@@ -46,7 +46,7 @@ export class ChartComponent implements OnInit {
   @Input() series: IndividualSeriesOptions[];
   @Input() xAxis: AxisOptions[];
 
-  chart: Chart;
+  chart: any;
 
   ngOnInit(): void {
     const chart = new ChartCreator(this.series, this.xAxis);
