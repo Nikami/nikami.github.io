@@ -26,7 +26,11 @@
       'tslib': 'npm:tslib/tslib.js',
       'rxjs': 'npm:rxjs',
       'angular2-highcharts': 'npm:angular2-highcharts',
-      'highcharts': 'npm:highcharts'
+      'highcharts': 'npm:highcharts',
+      'traceur': 'npm:traceur/traceur',
+      'ngx-cookie-service': 'npm:ngx-cookie-service/index.js',
+      'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
+      'ngx-cookie': 'npm:ngx-cookie/bundles/ngx-cookie.umd.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -42,6 +46,10 @@
         defaultExtension: 'js'
       },
       'angular2-highcharts': {
+        main: './index.js',
+        defaultExtension: 'js'
+      },
+      'angular2-in-memory-web-api': {
         main: './index.js',
         defaultExtension: 'js'
       }

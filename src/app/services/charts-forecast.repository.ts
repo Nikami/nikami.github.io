@@ -31,11 +31,6 @@ export class ChartCreator implements Options {
 
   series: IndividualSeriesOptions[];
   xAxis: AxisOptions[];
-  colorAxis: [{
-    lineColor: '#ffffff',
-    gridLineColor: '#ffffff',
-    minorGridLineColor: '#ffffff',
-  }];
 
   constructor(series: IndividualSeriesOptions[],
               xAxis: AxisOptions[]) {
