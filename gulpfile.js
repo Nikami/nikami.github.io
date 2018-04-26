@@ -50,7 +50,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('prod', ['clean'], function(done) {
-  return gulpSequence(['less_prod', 'html_prod', 'media_prod', 'lib_prod'], done);
+  return gulpSequence(['less_prod', 'html_prod', 'media_prod', 'lib_prod', 'api'], done);
 });
 
 gulp.task('dev', ['clean'], function(done) {
@@ -97,6 +97,10 @@ gulp.task('media_prod', function() {
     .pipe(gulp.dest(conf.DIST_DIR + 'assets/'));
 });
 
+gulp.task('api', function() {
+  return gulp.src(conf.SRC + 'api/**').pipe(gulp.dest(conf.DIST_DIR + 'api/'));
+});
+
 gulp.task('clean', function(done) {
   del([conf.DIST_DIR, conf.AOT_DIR]).then(paths => {
     gutil.log(gutil.colors.gray('Deleted folders:\n\t', paths.join('\n\t')));
@@ -105,7 +109,7 @@ gulp.task('clean', function(done) {
 });
 
 gulp.task('clean_src', function(done) {
-  del(['./src/**/*.js', './src/**/*.js.map']).then(paths => {
+  del(['./src/**/*.js', './src/**/*.js.map', '!systemjs.config.js']).then(paths => {
     gutil.log(gutil.colors.gray('Deleted files:\n\t', paths.join('\n\t')));
     done()
   });

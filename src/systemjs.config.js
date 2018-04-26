@@ -3,12 +3,6 @@
  * Adjust as necessary for your application needs.
  */
 (function (global) {
-  var Highcharts = require('highcharts');
-// Alternatively, this is how to load Highstock. Highmaps is similar.
-// var Highcharts = require('highcharts/highstock');
-
-// Load the exporting module, and initialize it.
-  require('highcharts/modules/exporting')(Highcharts);
 
   System.config({
     paths: {
@@ -31,7 +25,8 @@
       // other libraries
       'tslib': 'npm:tslib/tslib.js',
       'rxjs': 'npm:rxjs',
-      'angular-highcharts': 'npm:angular-highcharts/angular-highcharts.umd.js'
+      'angular2-highcharts': 'npm:angular2-highcharts',
+      'highcharts': 'npm:highcharts'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -40,6 +35,14 @@
         defaultExtension: 'js'
       },
       rxjs: {
+        defaultExtension: 'js'
+      },
+      highcharts: {
+        main: './highcharts.js',
+        defaultExtension: 'js'
+      },
+      'angular2-highcharts': {
+        main: './index.js',
         defaultExtension: 'js'
       }
     }

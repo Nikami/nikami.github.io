@@ -53,7 +53,7 @@
   <tabs>
     <tab *ngFor="let tab of tabs" [name]="tab.name">
       <ng-template tabContent>
-        <chart [series]="tab.series" [xAxis]="tab.axis"></chart>
+        <chart [options]="tab.chart"></chart>
       </ng-template>
     </tab>
   </tabs>
