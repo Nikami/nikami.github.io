@@ -43,11 +43,26 @@ export interface Forecast16JSON {
   readonly data: ReadonlyArray<DayForecast>;
 }
 
+// function getForecastIcon(forecast: Forecast16JSON) {
+//   const prefix = 'wi wi-';
+//   const code = forecast.weather[0].id;
+  // const icon = weatherIcons[code].icon;
+  //
+  // // If we are not in the ranges mentioned above, add a day/night prefix.
+  // if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
+  //   icon = 'day-' + icon;
+  // }
+  //
+  // // Finally tack on the prefix.
+  // icon = prefix + icon;
+// }
+
 export class Forecast16 {
   private _city: City;
   private _date: Date;
   private _days: ReadonlyArray<DayForecast>;
   private _firstDay: DayForecast;
+  private _icon: string;
 
   constructor(forecast: Forecast16JSON) {
     this._city = forecast.city;
@@ -104,5 +119,9 @@ export class Forecast16 {
 
   get weatherMainDesc(): string {
     return this._firstDay.weather[0].main;
+  }
+
+  get icon(): string {
+    return this._icon;
   }
 }
