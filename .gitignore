@@ -5,3 +5,8 @@ node_modules/**
 !src/systemjs.config.js
 .idea/**
 *.iml
+aot/**
+**.log
+**.css
+!dist/**/.css
+src/index.html
