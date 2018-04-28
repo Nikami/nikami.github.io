@@ -16,9 +16,17 @@ export class CurrentWeatherRepository {
               private weatherIconsService: WeatherIconsService) {
   }
 
-  async getCurrent(): Promise<CurrentWeather> {
+  public static getFromStorage(): string {
+    return StorageService.getFromStorage(ApiType.weather);
+  }
+
+  public static setToStorage(weather: WeatherJSON): void {
+    return StorageService.setToStorage(ApiType.weather, weather);
+  }
+
+  async getLast(): Promise<CurrentWeather> {
     const weather = this.getCookieWeather() ?
-      await Promise.resolve(JSON.parse(this.getFromStorage()))
+      await Promise.resolve(JSON.parse(CurrentWeatherRepository.getFromStorage()))
       : await this.referenceService.get(ApiType.weather, DEF_PARAMS);
 
     if (!weather) {
@@ -26,24 +34,16 @@ export class CurrentWeatherRepository {
     }
 
     this.setCookieWeather(weather);
-    this.setToStorage(ApiType.weather, weather);
+    CurrentWeatherRepository.setToStorage(weather);
 
     return new CurrentWeather(weather, this.weatherIconsService);
   }
 
-  getFromStorage(): string {
-    return this.storageService.getFromStorage(ApiType.weather);
-  }
-
-  setToStorage(param: string, weather: WeatherJSON): void {
-    return this.storageService.setToStorage(param, weather);
-  }
-
-  getCookieWeather() {
+  getCookieWeather(): object {
     return this.storageService.getCookie(ApiType.weather);
   }
 
-  setCookieWeather(weather: WeatherJSON) {
+  setCookieWeather(weather: WeatherJSON): void {
     const date = new Date();
     date.setMinutes(date.getMinutes() + 20);
     this.storageService.setCookie(ApiType.weather, weather.id.toString(), date);

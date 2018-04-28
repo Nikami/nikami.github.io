@@ -10,6 +10,6 @@ export class CurrentWeatherResolver implements Resolve<CurrentWeather> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<CurrentWeather> {
-    return this.currentWeatherRepository.getCurrent();
+    return this.currentWeatherRepository.getLast();
   }
 }

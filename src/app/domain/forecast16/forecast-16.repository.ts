@@ -9,8 +9,6 @@ const DEF_PARAMS: iAPIOpenWeatherParams = {
   cnt: '16'
 };
 
-// http://api.openweathermap.org/data/2.5/weather?id=5367815&APPID=bd5e378503939ddaee76f12ad7a97608
-
 @Injectable()
 export class Forecast16Repository {
 
@@ -18,9 +16,17 @@ export class Forecast16Repository {
               private storageService: StorageService) {
   }
 
+  public static getFromStorage(): string {
+    return StorageService.getFromStorage(FORECAST_PARAM);
+  }
+
+  public static setToStorage(forecast: Forecast16JSON): void {
+    return StorageService.setToStorage(FORECAST_PARAM, forecast);
+  }
+
   async getLast(): Promise<Forecast16> {
     const forecast = this.getCookieForecast() ?
-      await Promise.resolve(JSON.parse(this.getFromStorage()))
+      await Promise.resolve(JSON.parse(Forecast16Repository.getFromStorage()))
       : await this.referenceService.get(ApiType.daily, DEF_PARAMS);
 
     if (!forecast) {
@@ -28,26 +34,18 @@ export class Forecast16Repository {
     }
 
     this.setCookieForecast(forecast);
+    Forecast16Repository.setToStorage(forecast);
 
     return new Forecast16(forecast);
   }
 
-  getCookieForecast() {
+  getCookieForecast(): object {
     return this.storageService.getCookie(FORECAST_PARAM);
   }
 
-  setCookieForecast(forecast: Forecast16JSON) {
+  setCookieForecast(forecast: Forecast16JSON): void {
     const date = new Date();
     date.setHours(date.getHours() + 2);
     this.storageService.setCookie(FORECAST_PARAM, forecast.city.id.toString(), date);
-    this.setToStorage(FORECAST_PARAM, forecast);
-  }
-
-  getFromStorage(): string {
-    return this.storageService.getFromStorage(FORECAST_PARAM);
-  }
-
-  setToStorage(param: string, forecast: Forecast16JSON): void {
-    return this.storageService.setToStorage(param, forecast);
   }
 }

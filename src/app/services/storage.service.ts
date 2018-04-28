@@ -7,11 +7,11 @@ export class StorageService {
   constructor(private cookieService: CookieService) {
   }
 
-  getFromStorage(param: string): string {
+  public static getFromStorage(param: string): string {
     return localStorage.getItem(param);
   }
 
-  setToStorage(param: string, data: any): void {
+  public static setToStorage(param: string, data: any): void {
     if (data instanceof Object) {
       localStorage.setItem(param, JSON.stringify(data));
     } else {
@@ -19,12 +19,12 @@ export class StorageService {
     }
   }
 
-  getCookie(cookie: string): object {
+  public getCookie(cookie: string): object {
     return this.cookieService.getObject(cookie);
   }
 
-  setCookie(cookie: string, data: string, expireDate: Date) {
+  public setCookie(cookie: string, data: string, expireDate: Date): void {
     this.cookieService.put(cookie, data, {expires: expireDate});
-    this.setToStorage(cookie, data);
+    StorageService.setToStorage(cookie, data);
   }
 }
