@@ -1,37 +1,25 @@
-import {Component} from "@angular/core";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {Forecast16} from "../../domain/forecast-16";
+import {Forecast16} from "../../domain/forecast16/forecast-16";
 import {FORECAST_16_TEXT} from "./forecast16.text";
-import {ChartsForecastRepository, IChartForecast} from "../../services/charts-forecast.repository";
+import {ChartsForecastRepository, IChartForecast} from "../../domain/charts/charts-forecast.repository";
 
 @Component({
   moduleId: module.id,
   selector: 'forecast-16',
-  templateUrl: './forecast16.component.html'
+  templateUrl: './forecast16.component.html',
+  styleUrls: ['./forecast16.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class Forecast16Component {
 
   public forecast: Forecast16 = this.route.snapshot.data['forecast16'];
+  public weather = this.route.snapshot.data['weather'];
   public text = FORECAST_16_TEXT;
-  public tabs: IChartForecast[];
-  public icon: string;
+  public tabs: ReadonlyArray<IChartForecast>;
 
   constructor(private route: ActivatedRoute,
               private chartsForecastRepository: ChartsForecastRepository) {
     this.tabs = this.chartsForecastRepository.getAll(this.forecast);
-  }
-
-  setIcon(): void {
-    const prefix = 'wi wi-';
-    const code = this.forecast.weather[0].id;
-    const icon = weatherIcons[code].icon;
-
-    // If we are not in the ranges mentioned above, add a day/night prefix.
-    if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
-      icon = 'day-' + icon;
-    }
-
-    // Finally tack on the prefix.
-    icon = prefix + icon;
   }
 }

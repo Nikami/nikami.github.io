@@ -1,25 +1,28 @@
-import {isDevMode, NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {isDevMode, NgModule} from "@angular/core";
+import {HttpClientModule} from "@angular/common/http";
 import {ReferenceService} from "./services/reference.service";
-import {APP_ROUTES} from './app.routes';
-import {HttpUtils} from './utils/http-utils';
+import {APP_ROUTES} from "./app.routes";
+import {HttpUtils} from "./utils/http-utils";
 import {Forecast16Component} from "./components/forecast16/forecast16.component";
-import {Forecast16Resolver} from "./resolvers/forecast16.resolver";
-import {Forecast16Repository} from "./domain/forecast-16.repository";
+import {Forecast16Resolver} from "./domain/forecast16/forecast16.resolver";
+import {Forecast16Repository} from "./domain/forecast16/forecast-16.repository";
 import {TemperaturePipe} from "./services/pipes/temperature.pipe";
-import {DatePipe} from '@angular/common';
-import {TabsComponent} from './components/tabs/tabs.component';
-import {TabComponent} from './components/tabs/tab/tab.component';
-import {TabContentDirective} from './components/tabs/tab-content.directive';
-import {ChartsForecastRepository} from "./services/charts-forecast.repository";
-import { ChartModule } from 'angular2-highcharts';
-import * as highcharts from 'highcharts';
-import {HighchartsStatic} from 'angular2-highcharts/dist/HighchartsService';
-
-import {BrowserModule} from '@angular/platform-browser';
-import {RouterModule} from '@angular/router';
-import {AppComponent} from './app.component';
+import {DatePipe} from "@angular/common";
+import {TabsComponent} from "./components/tabs/tabs.component";
+import {TabComponent} from "./components/tabs/tab/tab.component";
+import {TabContentDirective} from "./components/tabs/tab-content.directive";
+import {ChartsForecastRepository} from "./domain/charts/charts-forecast.repository";
+import { ChartModule } from "angular2-highcharts";
+import * as highcharts from "highcharts";
+import {HighchartsStatic} from "angular2-highcharts/dist/HighchartsService";
+import {BrowserModule} from "@angular/platform-browser";
+import {RouterModule} from "@angular/router";
+import {AppComponent} from "./app.component";
 import {CookieModule} from "ngx-cookie";
+import {WeatherIconsService} from "./domain/weather-icons/weather-icons.service";
+import {CurrentWeatherRepository} from "./domain/current-weather/current-weather.repository";
+import {CurrentWeatherResolver} from "./domain/current-weather/current-weather.resolver";
+import {StorageService} from "./services/storage.service";
 
 // TODO Не самое лучшее решение, но красиво подружить highcharts с aot/rollap/systemjs весьма проблематично
 export function highchartsFactory(): any {
@@ -47,11 +50,15 @@ const ANGULAR_PROVIDERS = [
 const CUSTOM_PROVIDERS = [
   HttpUtils,
   ReferenceService,
+  StorageService,
   Forecast16Resolver,
   Forecast16Repository,
   ChartsForecastRepository,
   TemperaturePipe,
-  {provide: HighchartsStatic, useFactory: highchartsFactory}
+  {provide: HighchartsStatic, useFactory: highchartsFactory},
+  WeatherIconsService,
+  CurrentWeatherRepository,
+  CurrentWeatherResolver
 ];
 
 @NgModule({

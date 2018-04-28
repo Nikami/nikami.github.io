@@ -14,11 +14,16 @@ const rename = require('gulp-rename');
 const zip = require('gulp-zip');
 const uglify = require('gulp-uglify-es').default;
 const connect = require('gulp-connect');
-
+const cors = require('cors');
 const appVersion = require('./package.json').version;
 
 gulp.task('connect', function() {
-  connect.server();
+  connect.server({
+    root: '',
+    middleware: function() {
+      return [cors()];
+    }
+  });
 });
 
 const compileLess = function(root, config) {
@@ -50,7 +55,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('prod', ['clean'], function(done) {
-  return gulpSequence(['less_prod', 'html_prod', 'media_prod', 'lib_prod', 'api'], done);
+  return gulpSequence(['less_prod', 'html_prod', 'media_prod', 'lib_prod', 'favicon'], done);
 });
 
 gulp.task('dev', ['clean'], function(done) {
@@ -66,7 +71,7 @@ gulp.task('html_dev', function() {
 });
 
 gulp.task('less_dev', function() {
-  return compileLess([conf.SRC + 'assets/styles/styles.less'], {isProd: false});
+  return compileLess([conf.SRC + 'app/**/*.less', conf.SRC + 'assets/styles/styles.less'], {isProd: false});
 });
 
 gulp.task('less_prod', function() {
@@ -89,16 +94,15 @@ gulp.task('lib_prod', function() {
 
 gulp.task('media_prod', function() {
   const directories = [
-    'src/assets/*fonts/**/*',
-    'src/assets/*images/**/*'
+    conf.SRC + 'assets/*font/**',
+    conf.SRC + 'assets/*images/**'
   ];
 
-  return gulp.src(directories)
-    .pipe(gulp.dest(conf.DIST_DIR + 'assets/'));
+  return gulp.src(directories).pipe(gulp.dest(conf.DIST_DIR + 'assets/'));
 });
 
-gulp.task('api', function() {
-  return gulp.src(conf.SRC + 'api/**').pipe(gulp.dest(conf.DIST_DIR + 'api/'));
+gulp.task('favicon', function() {
+  return gulp.src(conf.SRC + 'favicon.png').pipe(gulp.dest(conf.DIST_DIR));
 });
 
 gulp.task('clean', function(done) {

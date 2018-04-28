@@ -1,19 +1,21 @@
 {
   "name": "ssp-angular",
-  "version": "0.0.1",
-  "description": "Test task",
+  "version": "0.1.0",
+  "description": "Weather forecast task",
   "author": {
     "name": "Tseliabina Daria",
     "email": "airad.tse@gmail.com"
   },
   "scripts": {
-    "rollup": "rollup -c rollup.config.js",
-    "aot": "ngc -p tsconfig.aot.json",
-    "watch": "concurrently --kill-others  \"npm run tsc:w\" \"gulp watch\"",
-    "lint": "tslint ./link/**/*.ts -t verbose",
-    "tsc:w": "tsc -w --pretty",
+    "start_dev": "npm run build_dev && gulp connect",
+    "start_prod": "npm run build_prod && gulp connect",
     "build_dev": "gulp dev && npm run watch",
-    "build_prod": "gulp prod && npm run aot && npm run rollup && gulp uglify && gulp zip"
+    "build_prod": "gulp prod && npm run aot && npm run rollup && gulp uglify && gulp zip",
+    "watch": "concurrently --kill-others  \"npm run tsc:w\" \"gulp watch\"",
+    "aot": "ngc -p tsconfig.aot.json",
+    "rollup": "rollup -c rollup.config.js",
+    "lint": "tslint ./link/**/*.ts -t verbose",
+    "tsc:w": "tsc -w --pretty"
   },
   "dependencies": {
     "@angular/animations": "4.3.5",
@@ -31,7 +33,7 @@
     "angular2-in-memory-web-api": "0.0.21",
     "core-js": "^2.4.1",
     "highcharts": "^6.1.0",
-    "ngx-cookie": "^3.0.1",
+    "ngx-cookie": "1.0.1",
     "rxjs": "5.5.5",
     "systemjs": "0.19.40",
     "timers": "0.1.1",
@@ -46,6 +48,7 @@
     "bootstrap-less-port": "0.0.6",
     "codelyzer": "^3.1.2",
     "concurrently": "^3.3.0",
+    "cors": "^2.8.4",
     "del": "^2.2.2",
     "graceful-fs": "^4.1.11",
     "gulp": "^3.9.1",

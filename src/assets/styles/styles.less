@@ -1,11 +1,12 @@
-@import "../../../node_modules/weather-icons/weather-icons/weather-icons.less";
 @import "bootstrap_import.less";
 @import "variables.less";
+@import "../../../node_modules/weather-icons/weather-icons/weather-icons.less";
 
-chart {
-  display: block;
+.nav-tabs .nav-link {
+  user-select: none;
+  cursor: pointer;
 }
 
-.highcharts-grid-line {
-  stroke: transparent;
+.nav-tabs .nav-link.active {
+  border-color: transparent;
 }

@@ -1,26 +1,41 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {HttpUtils} from "../utils/http-utils";
-import {CookieService} from "ngx-cookie";
-import {Forecast16JSON} from "../domain/forecast-16";
+
+export enum ApiType {
+  daily = 'forecast/daily',
+  weather = 'weather'
+}
+
+export enum MetricType {
+  fahrenheit = 'imperial',
+  celsius = 'metric'
+}
+
+export interface iAPIOpenWeatherParams {
+  id?: string;
+  cnt?: string;
+  units?: string;
+  APPID?: string;
+}
+
+const DEF_PARAMS: iAPIOpenWeatherParams = {
+  units: MetricType.celsius,
+  APPID: 'bd5e378503939ddaee76f12ad7a97608'
+};
 
 @Injectable()
 export class ReferenceService {
 
-  private static REFERENCE_URL = './api/';
+  private static API_URL = 'http://api.openweathermap.org/data/2.5/';
 
   constructor(private http: HttpClient,
-              private httpUtils: HttpUtils,
-              private cookieService: CookieService) {
+              private httpUtils: HttpUtils) {
   }
 
-  public async get(ref: string, filter?: Record<string, string>): Promise<any> {
-    const url = ReferenceService.REFERENCE_URL + ref;
-    const params = this.httpUtils.searchParamsFrom(filter);
-
-    if (this.getForecast()) {
-      return Promise.resolve(JSON.parse(this.getForecastFromStorage()));
-    }
+  public async get(apiType: ApiType, filter?: iAPIOpenWeatherParams): Promise<any> {
+    const url = ReferenceService.API_URL + ApiType[apiType as keyof typeof ApiType];
+    const params = this.httpUtils.searchParamsFrom(Object.assign(filter, DEF_PARAMS));
 
     const response = await this.http.get(url, {params, observe: 'response'})
       .toPromise()
@@ -28,28 +43,6 @@ export class ReferenceService {
         throw new Error('Encountered server error');
       });
 
-    this.setForecast(response.body);
-
     return response.body;
-  }
-
-  // TODO переписать в отдельный сервис кеширование погоды
-  getForecast() {
-    return this.cookieService.getObject('forecast16');
-  }
-
-  setForecast(forecast: Forecast16JSON | any) {
-    const date = new Date();
-    date.setMinutes(date.getMinutes() + 20);
-    this.cookieService.put('forecast16', forecast.city.id, {expires: date});
-    this.setForecastToStorage('forecast16', forecast);
-  }
-
-  getForecastFromStorage(): string {
-    return localStorage.getItem('forecast16');
-  }
-
-  setForecastToStorage(param: string, forecast: Forecast16JSON) {
-    localStorage.setItem(param, JSON.stringify(forecast));
   }
 }

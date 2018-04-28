@@ -1,4 +1,4 @@
-var nodePath = require('path'),
+let nodePath = require('path'),
     root = nodePath.resolve(__dirname) + '/',
     conf = {};
 

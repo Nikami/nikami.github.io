@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import {iAPIOpenWeatherParams} from "../services/reference.service";
 
 @Injectable()
 export class HttpUtils {
 
-  public searchParamsFrom(filter: Record<string, string> = {}): HttpParams {
-    const searchReducer = (params: HttpParams, key: string) => {
-      return (filter.hasOwnProperty(key)) ? params.set(key, filter[key]) : params;
+  public searchParamsFrom(filter: iAPIOpenWeatherParams): HttpParams {
+    const searchReducer = (params: HttpParams, key: any) => {
+      return (filter.hasOwnProperty(key)) ? params.set(key, (<any>filter)[key]) : params;
     };
-
     return Object.keys(filter).reduce(searchReducer, new HttpParams());
   }
 }
