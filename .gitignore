@@ -2,7 +2,9 @@ link/**
 node_modules/**
 **.js
 **.js.map
+**.zip
 !src/systemjs.config.js
+!dist/**/.js
 .idea/**
 *.iml
 aot/**
