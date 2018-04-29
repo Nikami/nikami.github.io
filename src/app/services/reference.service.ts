@@ -16,6 +16,7 @@ export interface iAPIOpenWeatherParams {
   id?: string;
   cnt?: string;
   units?: string;
+  q?: string;
   APPID?: string;
 }
 
@@ -34,7 +35,7 @@ export class ReferenceService {
   }
 
   public async get(apiType: ApiType, filter?: iAPIOpenWeatherParams): Promise<any> {
-    const url = ReferenceService.API_URL + ApiType[apiType as keyof typeof ApiType];
+    const url = ReferenceService.API_URL + apiType;
     const params = this.httpUtils.searchParamsFrom(Object.assign(filter, DEF_PARAMS));
 
     const response = await this.http.get(url, {params, observe: 'response'})

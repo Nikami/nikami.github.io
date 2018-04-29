@@ -4,11 +4,12 @@ node_modules/**
 **.js.map
 **.zip
 !src/systemjs.config.js
-!dist/**/.js
 .idea/**
 *.iml
 aot/**
 **.log
 **.css
+!dist/*.js
 !dist/**/.css
+!dist/assets/styles/styles.css
 src/index.html

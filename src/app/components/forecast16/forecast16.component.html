@@ -1,7 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container">
+
+  <div class="container align-items-center justify-content-between">
     <div class="navbar-brand">
       <i class="wi wi-day-sunny mr-3"></i>Forecast
+    </div>
+
+    <div class="col-4 no-gutters">
+      <div class="input-group input-group-sm">
+        <input #searchInput type="text" id="search" class="form-control form-control-sm"
+               placeholder="{{ text.SEARCH_PLACEHOLDER }}">
+        <div class="input-group-append">
+          <button type="button" class="btn btn-outline-info" (click)="searchByCityName(searchInput.value)">
+            {{ text.SEARCH }}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </nav>

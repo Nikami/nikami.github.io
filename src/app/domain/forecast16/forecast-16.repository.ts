@@ -2,6 +2,8 @@ import {Injectable} from "@angular/core";
 import {ApiType, iAPIOpenWeatherParams, ReferenceService} from "../../services/reference.service";
 import {Forecast16, Forecast16JSON} from "./forecast-16";
 import {StorageService} from "../../services/storage.service";
+import {CurrentWeather} from "../current-weather/current-weather";
+import {CurrentWeatherRepository} from "../current-weather/current-weather.repository";
 
 const FORECAST_PARAM = 'forecast16';
 const DEF_PARAMS: iAPIOpenWeatherParams = {
@@ -31,6 +33,19 @@ export class Forecast16Repository {
 
     if (!forecast) {
       throw new Error(`forecast is not in reference`);
+    }
+
+    this.setCookieForecast(forecast);
+    Forecast16Repository.setToStorage(forecast);
+
+    return new Forecast16(forecast);
+  }
+
+  async getByCityName(cityName: string): Promise<Forecast16> {
+    const forecast = await this.referenceService.get(ApiType.daily, {q: cityName, cnt: '16'});
+
+    if (!forecast) {
+      return null;
     }
 
     this.setCookieForecast(forecast);

@@ -4,6 +4,8 @@ export const FORECAST_16_TEXT = {
   HUMIDITY: 'Humidity',
   WIND_SPEED: 'Wind speed',
   CLOUDS: 'Clouds',
+  SEARCH: 'Search',
+  SEARCH_PLACEHOLDER: 'City',
 
   TABS: {
     TEMPERATURE: 'Temperature',
