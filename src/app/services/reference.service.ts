@@ -28,7 +28,7 @@ const DEF_PARAMS: iAPIOpenWeatherParams = {
 @Injectable()
 export class ReferenceService {
 
-  private static API_URL = 'http://api.openweathermap.org/data/2.5/';
+  private static API_URL = 'https://api.openweathermap.org/data/2.5/';
 
   constructor(private http: HttpClient,
               private httpUtils: HttpUtils) {
