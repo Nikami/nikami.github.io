@@ -14,7 +14,7 @@ import {TabContentDirective} from "./components/tabs/tab-content.directive";
 import {ChartsForecastRepository} from "./domain/charts/charts-forecast.repository";
 import { ChartModule } from "angular2-highcharts";
 import * as highcharts from "highcharts";
-import {HighchartsStatic} from "angular2-highcharts/dist/HighchartsService";
+import {HighchartsStatic} from "angular2-highcharts/docs/HighchartsService";
 import {BrowserModule} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
 import {AppComponent} from "./app.component";

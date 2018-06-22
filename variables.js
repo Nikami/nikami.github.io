@@ -6,7 +6,7 @@ let nodePath = require('path'),
 conf.BASE_URL = '';
 conf.ROOT_WEB = conf.BASE_URL;
 
-conf.DIST_DIR = root + 'dist/';
+conf.DIST_DIR = root + 'docs/';
 conf.SRC = root + 'src/';
 conf.AOT_DIR = root + 'aot/';
 

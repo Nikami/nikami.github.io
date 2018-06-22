@@ -82,7 +82,7 @@ gulp.task('less_prod', function() {
 gulp.task('lib_prod', function() {
   const commonLibs = [
     {name: 'shim', path: 'node_modules/core-js/client/shim.min.js'},
-    {name: 'zone', path: 'node_modules/zone.js/dist/zone.min.js'}
+    {name: 'zone', path: 'node_modules/zone.js/docs/zone.min.js'}
   ];
 
   for (let file of commonLibs) {
