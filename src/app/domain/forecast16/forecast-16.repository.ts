@@ -5,7 +5,8 @@ import {StorageService} from "../../services/storage.service";
 
 const FORECAST_PARAM = 'forecast16';
 const DEF_PARAMS: IAPIOpenWeatherParams = {
-  id: '5367815'
+  q: 'london',
+  cnt: '5'
 };
 
 @Injectable()
