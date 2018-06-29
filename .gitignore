@@ -6,7 +6,8 @@ node_modules/**
 *.iml
 aot/**
 **.log
-src/**.js
-!src/systemjs.config.js
-src/**.css
+src/**/*.js
+src/**/*.css
 src/index.html
+!src/systemjs.config.js
+package-lock.json

@@ -1,20 +1,15 @@
 import {Injectable} from "@angular/core";
-import {ApiType, iAPIOpenWeatherParams, ReferenceService} from "../../services/reference.service";
+import {ApiType, IAPIOpenWeatherParams, ReferenceService} from "../../services/reference.service";
 import {WeatherIconsService} from "../weather-icons/weather-icons.service";
 import {StorageService} from "../../services/storage.service";
 import {CurrentWeather, WeatherJSON} from "./current-weather";
 
-const DEF_PARAMS: iAPIOpenWeatherParams = {
+const DEF_PARAMS: IAPIOpenWeatherParams = {
   id: '5367815'
 };
 
 @Injectable()
 export class CurrentWeatherRepository {
-
-  constructor(private referenceService: ReferenceService,
-              private storageService: StorageService,
-              private weatherIconsService: WeatherIconsService) {
-  }
 
   public static getFromStorage(): string {
     return StorageService.getFromStorage(ApiType.weather);
@@ -22,6 +17,11 @@ export class CurrentWeatherRepository {
 
   public static setToStorage(weather: WeatherJSON): void {
     return StorageService.setToStorage(ApiType.weather, weather);
+  }
+
+  constructor(private referenceService: ReferenceService,
+              private storageService: StorageService,
+              private weatherIconsService: WeatherIconsService) {
   }
 
   async getLast(): Promise<CurrentWeather> {

@@ -14,7 +14,7 @@ const BLUE_HEX = '#a4daf6';
 const PINK_HEX = '#f6daeb';
 const RED_HEX = '#f66358';
 const DARK_BLUE_HEX = '#5377ff';
-const COLS_WIDTH = 60;
+const COLS_WIDTH = 150;
 
 export class ChartCreator implements Options {
   chart = {
@@ -63,7 +63,7 @@ export class ChartsForecastRepository {
       name: FORECAST_16_TEXT.TABS.WIND,
       chart: new ChartCreator([{
           name: FORECAST_16_TEXT.TABS.WIND,
-          data: forecast.days.map((day) => day.speed),
+          data: forecast.days.map((day) => day.wind.speed),
           color: BLUE_HEX,
           pointWidth: COLS_WIDTH
         }],
@@ -77,9 +77,7 @@ export class ChartsForecastRepository {
       chart: new ChartCreator(
         [{
           name: FORECAST_16_TEXT.TABS.TEMPERATURE,
-          data: forecast.days.map((day) => {
-            return +(((day.temp.max + day.temp.min) / 2).toFixed(0));
-          }),
+          data: forecast.days.map((day) => +day.main.temp.toFixed(0)),
           color: PINK_HEX,
           pointWidth: COLS_WIDTH
         }],
@@ -92,7 +90,7 @@ export class ChartsForecastRepository {
       name: FORECAST_16_TEXT.TABS.PRESSURE,
       chart: new ChartCreator([{
           name: FORECAST_16_TEXT.TABS.PRESSURE,
-          data: forecast.days.map((day) => day.pressure),
+          data: forecast.days.map((day) => day.main.pressure),
           color: RED_HEX,
           pointWidth: COLS_WIDTH
         }],
@@ -105,7 +103,7 @@ export class ChartsForecastRepository {
       name: FORECAST_16_TEXT.TABS.HUMIDITY,
       chart: new ChartCreator([{
           name: FORECAST_16_TEXT.TABS.HUMIDITY,
-          data: forecast.days.map((day) => day.humidity),
+          data: forecast.days.map((day) => day.main.humidity),
           color: DARK_BLUE_HEX,
           pointWidth: COLS_WIDTH
         }],

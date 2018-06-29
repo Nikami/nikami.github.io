@@ -15,6 +15,7 @@ const zip = require('gulp-zip');
 const uglify = require('gulp-uglify-es').default;
 const connect = require('gulp-connect');
 const cors = require('cors');
+const htmlmin = require('gulp-htmlmin');
 const appVersion = require('./package.json').version;
 
 gulp.task('connect', function() {
@@ -45,6 +46,7 @@ const compileLess = function(root, config) {
 const htmlProcess = function(isProd) {
   return gulp.src(conf.SRC + 'index_template.html')
     .pipe(preprocess({context: {MODE: isProd ? 'prod': 'dev', BASE_URL: conf.BASE_URL, APP_VERSION: appVersion}}))
+    .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(rename('index.html'))
     .pipe(gulp.dest(isProd ? conf.DIST_DIR : conf.SRC));
 };
@@ -82,7 +84,7 @@ gulp.task('less_prod', function() {
 gulp.task('lib_prod', function() {
   const commonLibs = [
     {name: 'shim', path: 'node_modules/core-js/client/shim.min.js'},
-    {name: 'zone', path: 'node_modules/zone.js/docs/zone.min.js'}
+    {name: 'zone', path: 'node_modules/zone.js/dist/zone.min.js'}
   ];
 
   for (let file of commonLibs) {

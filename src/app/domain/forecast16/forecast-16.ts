@@ -18,15 +18,28 @@ interface City {
 
 interface DayForecast {
   readonly dt: number;
-  readonly temp: Temperature;
-  readonly pressure: number;
-  readonly humidity: number;
+  readonly main: {
+    readonly temp: number;
+    readonly temp_min: number;
+    readonly temp_max: number;
+    readonly pressure: number;
+    readonly sea_level: number;
+    readonly grnd_level: number;
+    readonly humidity: number;
+    readonly temp_kf: number;
+  };
   readonly weather: ReadonlyArray<Weather>;
-  readonly speed: number;
-  readonly deg: number;
-  readonly clouds: number;
-  readonly rain: number;
-  readonly uvi: number
+  readonly clouds: {
+    readonly all: number;
+  };
+  readonly wind: {
+    readonly speed: number;
+    readonly deg: number;
+  },
+  readonly sys: {
+    readonly pod: string;
+  },
+  readonly dt_txt: string;
 }
 
 export interface Forecast16JSON {

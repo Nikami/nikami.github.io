@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {HttpUtils} from "../utils/http-utils";
 
 export enum ApiType {
+  forecast = 'forecast',
   daily = 'forecast/daily',
   weather = 'weather'
 }
@@ -12,7 +13,7 @@ export enum MetricType {
   celsius = 'metric'
 }
 
-export interface iAPIOpenWeatherParams {
+export interface IAPIOpenWeatherParams {
   id?: string;
   cnt?: string;
   units?: string;
@@ -20,9 +21,9 @@ export interface iAPIOpenWeatherParams {
   APPID?: string;
 }
 
-const DEF_PARAMS: iAPIOpenWeatherParams = {
+const DEF_PARAMS: IAPIOpenWeatherParams = {
   units: MetricType.celsius,
-  APPID: 'bd5e378503939ddaee76f12ad7a97608'
+  APPID: 'b4fdac594bf85ff05aeeab8cd87cd159'
 };
 
 @Injectable()
@@ -34,7 +35,7 @@ export class ReferenceService {
               private httpUtils: HttpUtils) {
   }
 
-  public async get(apiType: ApiType, filter?: iAPIOpenWeatherParams): Promise<any> {
+  public async get(apiType: ApiType, filter?: IAPIOpenWeatherParams): Promise<any> {
     const url = ReferenceService.API_URL + apiType;
     const params = this.httpUtils.searchParamsFrom(Object.assign(filter, DEF_PARAMS));
 
