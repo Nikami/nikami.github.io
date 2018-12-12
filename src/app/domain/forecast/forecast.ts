@@ -18,6 +18,7 @@ interface City {
 
 interface DayForecast {
   readonly dt: number;
+  readonly dt_txt: string;
   readonly main: {
     readonly temp: number;
     readonly temp_min: number;
@@ -38,19 +39,18 @@ interface DayForecast {
   },
   readonly sys: {
     readonly pod: string;
-  },
-  readonly dt_txt: string;
+  }
 }
 
-export interface Forecast16JSON {
+export interface ForecastJSON {
   readonly city: City;
   readonly list: ReadonlyArray<DayForecast>;
 }
 
-export class Forecast16 {
+export class Forecast {
   private _days: ReadonlyArray<DayForecast>;
 
-  constructor(forecast: Forecast16JSON) {
+  constructor(forecast: ForecastJSON) {
     this._days = forecast.list;
   }
 

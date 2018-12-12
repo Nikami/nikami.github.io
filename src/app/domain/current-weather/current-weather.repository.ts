@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {ApiType, IAPIOpenWeatherParams, ReferenceService} from "../../services/reference.service";
+import {ApiType, IAPIOpenWeatherParams, OpenWeatherApiService} from "../../services/open-weather-api.service";
 import {WeatherIconsService} from "../weather-icons/weather-icons.service";
 import {StorageService} from "../../services/storage.service";
 import {CurrentWeather, WeatherJSON} from "./current-weather";
@@ -19,7 +19,7 @@ export class CurrentWeatherRepository {
     return StorageService.setToStorage(ApiType.weather, weather);
   }
 
-  constructor(private referenceService: ReferenceService,
+  constructor(private oWeatherApi: OpenWeatherApiService,
               private storageService: StorageService,
               private weatherIconsService: WeatherIconsService) {
   }
@@ -28,7 +28,7 @@ export class CurrentWeatherRepository {
     const weatherInStorage = CurrentWeatherRepository.getFromStorage();
     const weather = this.getCookieWeather() && weatherInStorage ?
       await Promise.resolve(JSON.parse(weatherInStorage))
-      : await this.referenceService.get(ApiType.weather, DEF_PARAMS);
+      : await this.oWeatherApi.get(ApiType.weather, DEF_PARAMS);
 
     if (!weather) {
       throw new Error(`forecast is not in reference`);
@@ -41,7 +41,7 @@ export class CurrentWeatherRepository {
   }
 
   async getByCityName(cityName: string): Promise<CurrentWeather> {
-    const weather = await this.referenceService.get(ApiType.weather, {q: cityName});
+    const weather = await this.oWeatherApi.get(ApiType.weather, {q: cityName});
 
     if (!weather) {
       return null;

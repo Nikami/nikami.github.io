@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import {IAPIOpenWeatherParams} from "../services/reference.service";
+import {IAPIOpenWeatherParams} from "../services/open-weather-api.service";
 
 @Injectable()
 export class HttpUtils {

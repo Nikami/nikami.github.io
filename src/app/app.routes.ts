@@ -1,6 +1,6 @@
 import {Routes} from "@angular/router";
-import {Forecast16Component} from "./components/forecast16/forecast16.component";
-import {Forecast16Resolver} from "./domain/forecast16/forecast16.resolver";
+import {ForecastComponent} from "./domain/forecast/forecast.component";
+import {ForecastResolver} from "./domain/forecast/forecast.resolver";
 import {CurrentWeatherResolver} from "./domain/current-weather/current-weather.resolver";
 
 export const APP_ROUTES: Routes = [
@@ -11,9 +11,9 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'forecast',
-    component: Forecast16Component,
+    component: ForecastComponent,
     resolve: {
-      forecast16: Forecast16Resolver,
+      forecast: ForecastResolver,
       weather: CurrentWeatherResolver
     }
   }

@@ -1,26 +1,24 @@
-import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild, ViewEncapsulation
-} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {Forecast16} from "../../domain/forecast16/forecast-16";
-import {FORECAST_16_TEXT} from "./forecast16.text";
-import {ChartsForecastRepository, IChartForecast} from "../../domain/charts/charts-forecast.repository";
-import {CurrentWeatherRepository} from "../../domain/current-weather/current-weather.repository";
-import {Forecast16Repository} from "../../domain/forecast16/forecast-16.repository";
+import {Forecast} from "./forecast";
+import {FORECAST_TEXT} from "./forecast.text";
+import {ChartsForecastRepository, IChartForecast} from "../charts/charts-forecast.repository";
+import {CurrentWeatherRepository} from "../current-weather/current-weather.repository";
+import {ForecastRepository} from "./forecast.repository";
 
 @Component({
   moduleId: module.id,
-  selector: 'forecast-16',
-  templateUrl: './forecast16.component.html',
-  styleUrls: ['./forecast16.component.css'],
+  selector: 'forecast',
+  templateUrl: './forecast.component.html',
+  styleUrls: ['./forecast.component.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Forecast16Component {
+export class ForecastComponent {
 
-  public forecast: Forecast16 = this.route.snapshot.data['forecast16'];
+  public forecast: Forecast = this.route.snapshot.data['forecast'];
   public weather = this.route.snapshot.data['weather'];
-  public text = FORECAST_16_TEXT;
+  public text = FORECAST_TEXT;
   public tabs: ReadonlyArray<IChartForecast>;
 
   @ViewChild('searchInput') private searchInput: ElementRef;
@@ -28,7 +26,7 @@ export class Forecast16Component {
   constructor(private route: ActivatedRoute,
               private chartsForecastRepository: ChartsForecastRepository,
               private currentWeatherRepository: CurrentWeatherRepository,
-              private forecast16Repository: Forecast16Repository,
+              private forecast16Repository: ForecastRepository,
               private cdRef: ChangeDetectorRef) {
     this.tabs = this.chartsForecastRepository.getAll(this.forecast);
   }

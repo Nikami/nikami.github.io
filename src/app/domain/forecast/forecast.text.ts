@@ -1,5 +1,5 @@
-export const FORECAST_16_TEXT = {
-  TITLE: 'Forecast 16 days',
+export const FORECAST_TEXT = {
+  TITLE: 'Forecast 24',
   PRESSURE: 'Pressure',
   HUMIDITY: 'Humidity',
   WIND_SPEED: 'Wind speed',

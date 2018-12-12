@@ -27,7 +27,7 @@ const DEF_PARAMS: IAPIOpenWeatherParams = {
 };
 
 @Injectable()
-export class ReferenceService {
+export class OpenWeatherApiService {
 
   private static API_URL = 'https://api.openweathermap.org/data/2.5/';
 
@@ -36,7 +36,7 @@ export class ReferenceService {
   }
 
   public async get(apiType: ApiType, filter?: IAPIOpenWeatherParams): Promise<any> {
-    const url = ReferenceService.API_URL + apiType;
+    const url = OpenWeatherApiService.API_URL + apiType;
     const params = this.httpUtils.searchParamsFrom(Object.assign(filter, DEF_PARAMS));
 
     const response = await this.http.get(url, {params, observe: 'response'})

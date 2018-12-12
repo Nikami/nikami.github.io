@@ -1,16 +1,13 @@
 import {isDevMode, NgModule} from "@angular/core";
 import {HttpClientModule} from "@angular/common/http";
-import {ReferenceService} from "./services/reference.service";
+import {OpenWeatherApiService} from "./services/open-weather-api.service";
 import {APP_ROUTES} from "./app.routes";
 import {HttpUtils} from "./utils/http-utils";
-import {Forecast16Component} from "./components/forecast16/forecast16.component";
-import {Forecast16Resolver} from "./domain/forecast16/forecast16.resolver";
-import {Forecast16Repository} from "./domain/forecast16/forecast-16.repository";
+import {ForecastComponent} from "./domain/forecast/forecast.component";
+import {ForecastResolver} from "./domain/forecast/forecast.resolver";
+import {ForecastRepository} from "./domain/forecast/forecast.repository";
 import {TemperaturePipe} from "./services/pipes/temperature.pipe";
 import {DatePipe} from "@angular/common";
-import {TabsComponent} from "./components/tabs/tabs.component";
-import {TabComponent} from "./components/tabs/tab/tab.component";
-import {TabContentDirective} from "./components/tabs/tab-content.directive";
 import {ChartsForecastRepository} from "./domain/charts/charts-forecast.repository";
 import {ChartModule} from "angular2-highcharts";
 import {HighchartsStatic} from "angular2-highcharts/dist/HighchartsService";
@@ -23,8 +20,8 @@ import {WeatherIconsService} from "./domain/weather-icons/weather-icons.service"
 import {CurrentWeatherRepository} from "./domain/current-weather/current-weather.repository";
 import {CurrentWeatherResolver} from "./domain/current-weather/current-weather.resolver";
 import {StorageService} from "./services/storage.service";
+import {SharedModule} from "./shared/shared.module";
 
-// TODO Не самое лучшее решение, но красиво подружить highcharts с aot/rollap/systemjs весьма проблематично
 export function highchartsFactory(): any {
   return isDevMode() ? highcharts : (<any>highcharts)['default'];
 }
@@ -49,10 +46,10 @@ const ANGULAR_PROVIDERS = [
 
 const CUSTOM_PROVIDERS = [
   HttpUtils,
-  ReferenceService,
+  OpenWeatherApiService,
   StorageService,
-  Forecast16Resolver,
-  Forecast16Repository,
+  ForecastResolver,
+  ForecastRepository,
   ChartsForecastRepository,
   TemperaturePipe,
   {provide: HighchartsStatic, useFactory: highchartsFactory},
@@ -64,15 +61,13 @@ const CUSTOM_PROVIDERS = [
 @NgModule({
   imports: [
     ...ANGULAR_MODULES,
-    ...VENDOR_MODULES
+    ...VENDOR_MODULES,
+    SharedModule
   ],
   declarations: [
     // components
     AppComponent,
-    Forecast16Component,
-    TabsComponent,
-    TabComponent,
-    TabContentDirective,
+    ForecastComponent,
     // pipes
     TemperaturePipe
   ],
